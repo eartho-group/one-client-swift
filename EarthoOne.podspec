@@ -36,7 +36,7 @@ Pod::Spec.new do |s|
                         EarthoOne SDK for iOS, macOS, tvOS, and watchOS apps.
                         DESC
   s.homepage         = 'https://github.com/eartho-group/one-client-swift'
-  s.license          = 'MIT'
+  s.license          = 'Mozilla Public License Version 2.0'
   s.authors          = { 'EarthoOne' => 'support@eartho.world', 'Eartho' => 'contact@eartho.world' }
   s.source           = { :git => 'https://github.com/eartho-group/one-client-swift.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/eartho'
@@ -54,9 +54,9 @@ Pod::Spec.new do |s|
   s.osx.exclude_files       = ios_files
   s.osx.pod_target_xcconfig = { 'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => 'WEB_AUTH_PLATFORM' }
 
-  s.tvos.deployment_target = '12.0'
-  s.tvos.exclude_files     = excluded_files
-
-  s.watchos.deployment_target = '6.2'
-  s.watchos.exclude_files     = excluded_files
+#   s.tvos.deployment_target = '12.0'
+#   s.tvos.exclude_files     = excluded_files
+#
+#   s.watchos.deployment_target = '6.2'
+#   s.watchos.exclude_files     = excluded_files
 end
