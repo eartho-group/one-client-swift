@@ -15,6 +15,7 @@ enum JWTAlgorithm: String {
         let publicKeyText = jwk.replacingOccurrences(of: "\n", with: "")
             .replacingOccurrences(of: "-----BEGIN PUBLIC KEY-----", with: "")
             .replacingOccurrences(of: "-----END PUBLIC KEY-----", with: "")
+            .replacingOccurrences(of: " ", with: "")
         
         let dataPublicKey = Data(base64Encoded: publicKeyText)!
         let publicKey: SecKey! = SecKeyCreateWithData(dataPublicKey as NSData, [

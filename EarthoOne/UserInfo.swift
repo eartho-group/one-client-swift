@@ -8,7 +8,7 @@ public struct UserInfo: JSONObjectPayload {
 
     /// The list of public claims.
     public static let publicClaims = [
-        "sub",
+        "uid",
         "first_name",
         "family_name",
         "middle_name",
@@ -30,7 +30,7 @@ public struct UserInfo: JSONObjectPayload {
     // MARK: - Claims
 
     /// The EarthoOne user identifier.
-    public let sub: String
+    public let uid: String
     /// The first name of the user.
     ///
     /// - Requires: The `profile` scope.
@@ -38,7 +38,7 @@ public struct UserInfo: JSONObjectPayload {
     /// The last name of the user.
     ///
     /// - Requires: The `profile` scope.
-    public let familyName: String?
+    public let lastName: String?
     /// The middle name of the user.
     ///
     /// - Requires: The `profile` scope.
@@ -83,7 +83,7 @@ public struct UserInfo: JSONObjectPayload {
     /// The phone number of the user.
     ///
     /// - Requires: The `phone_number` scope.
-    public let phoneNumber: String?
+    public let phone: String?
     /// If the user's phone number is verified.
     ///
     /// - Requires: The `phone_number` scope.
@@ -108,11 +108,12 @@ public extension UserInfo {
 
     /// Creates a new `UserInfo` from a JSON dictionary.
     init?(json: [String: Any]) {
-        guard let sub = json["sub"] as? String else { return nil }
         guard let user = json["user"] as? [String: Any] else { return nil }
         
+        guard let uid = user["user"] as? String else { return nil }
+
         let firstName = user["firstName"] as? String
-        let familyName = user["familyName"] as? String
+        let lastName = user["lastName"] as? String
         let middleName = user["middleName"] as? String
         let displayName = user["displayName"] as? String
         let preferredUsername = user["preferred_username"] as? String
@@ -135,7 +136,7 @@ public extension UserInfo {
         var locale: Locale?
         if let localeInfo = user["locale"] as? String { locale = Locale(identifier: localeInfo) }
 
-        let phoneNumber = user["phoneNumber"] as? String
+        let phone = user["phone"] as? String
         let phoneNumberVerified = user["phoneNumberVerified"] as? Bool
         let address = user["address"] as? [String: String]
 
@@ -147,9 +148,9 @@ public extension UserInfo {
         var customClaims = user
         UserInfo.publicClaims.forEach { customClaims.removeValue(forKey: $0) }
 
-        self.init(sub: sub,
+        self.init(uid: uid,
                   firstName: firstName,
-                  familyName: familyName,
+                  lastName: lastName,
                   middleName: middleName,
                   displayName: displayName,
                   photoURL: photo,
@@ -160,7 +161,7 @@ public extension UserInfo {
                   birthdate: birthdate,
                   zoneinfo: zoneinfo,
                   locale: locale,
-                  phoneNumber: phoneNumber,
+                  phone: phone,
                   phoneNumberVerified: phoneNumberVerified,
                   address: address,
                   updatedAt: updatedAt,

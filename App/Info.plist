@@ -11,7 +11,7 @@
 			<string>eartho</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.eartho.example.App</string>
+				<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 			</array>
 		</dict>
 	</array>
