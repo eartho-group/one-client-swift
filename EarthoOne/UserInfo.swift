@@ -110,7 +110,7 @@ public extension UserInfo {
     init?(json: [String: Any]) {
         guard let user = json["user"] as? [String: Any] else { return nil }
         
-        guard let uid = user["user"] as? String else { return nil }
+        guard let uid = user["uid"] as? String else { return nil }
 
         let firstName = user["firstName"] as? String
         let lastName = user["lastName"] as? String
