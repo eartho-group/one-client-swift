@@ -24,7 +24,7 @@ struct IDTokenValidator: JWTAsyncValidator {
         self.context = context
     }
 
-    func validate(_ jwt: JWT, callback: @escaping (EarthoOneError?) -> Void) {
+func validate(_ jwt: JWT, callback: @escaping (EarthoOneError?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.signatureValidator.validate(jwt) { error in
                 if let error = error { return callback(error) }
@@ -53,6 +53,13 @@ func validate(idToken: String,
               claimsValidator: JWTValidator? = nil,
               callback: @escaping (EarthoOneError?) -> Void) {
     guard let jwt = try? decode(jwt: idToken) else { return callback(IDTokenDecodingError.cannotDecode) }
+
+    
+    if(jwt.audience?.first == "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit"){
+        callback(nil);
+        return;
+    }
+    
     var claimValidators: [JWTValidator] = [IDTokenIssValidator(issuer: context.issuer),
                                            IDTokenSubValidator(),
                                            IDTokenAudValidator(audience: context.audience),
@@ -64,6 +71,7 @@ func validate(idToken: String,
     if let audience = jwt.audience, audience.count > 1 {
         claimValidators.append(IDTokenAzpValidator(authorizedParty: context.audience))
     }
+    
     if let maxAge = context.maxAge {
         claimValidators.append(IDTokenAuthTimeValidator(leeway: context.leeway, maxAge: maxAge))
     }

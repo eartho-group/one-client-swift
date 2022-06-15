@@ -1229,13 +1229,15 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.EarthoOne;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = EarthoOne;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WEB_AUTH_PLATFORM;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1259,12 +1261,14 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.EarthoOne;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
 				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
 				PRODUCT_NAME = EarthoOne;
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = WEB_AUTH_PLATFORM;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1292,7 +1296,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.EarthoOne;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
 				PRODUCT_NAME = EarthoOne;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1326,7 +1330,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.EarthoOne;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
 				PRODUCT_NAME = EarthoOne;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1355,7 +1359,7 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.EarthoOne;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
 				PRODUCT_NAME = EarthoOne;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1384,7 +1388,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.EarthoOne;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
 				PRODUCT_NAME = EarthoOne;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -1414,7 +1418,7 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
-				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.EarthoOne;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
 				PRODUCT_NAME = EarthoOne;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -1443,7 +1447,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.EarthoOne;
+				PRODUCT_BUNDLE_IDENTIFIER = com.eartho.EarthoOne;
 				PRODUCT_NAME = EarthoOne;
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;

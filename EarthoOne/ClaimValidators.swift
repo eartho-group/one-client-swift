@@ -17,7 +17,7 @@ struct IDTokenClaimsValidator: JWTValidator {
         self.validators = validators
     }
 
-    func validate(_ jwt: JWT) -> EarthoOneError? {
+func validate(_ jwt: JWT) -> EarthoOneError? {
         return validators.first { $0.validate(jwt) != nil }?.validate(jwt)
     }
 }

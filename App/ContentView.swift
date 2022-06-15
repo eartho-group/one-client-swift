@@ -33,7 +33,7 @@ struct ContentView: View {
     
     func login() {
         earthoOne.connectWithPopup(
-          accessId: "V1te8aEqOJNtPseu3VTe",
+          accessId: "2drlTkv19Alfvu9pEPTP",
           onSuccess: { Credentials in
                         //Send to server
                         Credentials.idToken
