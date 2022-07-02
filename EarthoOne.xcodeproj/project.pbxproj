@@ -175,10 +175,10 @@
 		962113BE284BF60A0018DBCB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962113BD284BF60A0018DBCB /* ContentView.swift */; };
 		962113C0284BF60B0018DBCB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962113BF284BF60B0018DBCB /* Assets.xcassets */; };
 		962113C3284BF60B0018DBCB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 962113C2284BF60B0018DBCB /* Preview Assets.xcassets */; };
-		962113C7284BF6770018DBCB /* EarthoOne.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06DD781CC448B10011842B /* EarthoOne.framework */; };
-		962113C8284BF6770018DBCB /* EarthoOne.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06DD781CC448B10011842B /* EarthoOne.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		962113D4284D10840018DBCB /* JWTAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962113D2284D0FA30018DBCB /* JWTAlgorithm.swift */; };
 		962113D6284D159B0018DBCB /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 962113D5284D159B0018DBCB /* JWTDecode */; };
+		969FC0E0287006B300BB146C /* EarthoOne.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06DD781CC448B10011842B /* EarthoOne.framework */; platformFilter = ios; };
+		969FC0E1287006B300BB146C /* EarthoOne.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5F06DD781CC448B10011842B /* EarthoOne.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		96BA473D284BEA1000644C8B /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 96BA473C284BEA1000644C8B /* SimpleKeychain */; };
 		970BC36B25C27095007A7745 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970BC36A25C27095007A7745 /* Challenge.swift */; };
 		970BC36C25C27095007A7745 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 970BC36A25C27095007A7745 /* Challenge.swift */; };
@@ -189,7 +189,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		962113C9284BF6770018DBCB /* PBXContainerItemProxy */ = {
+		969FC0E2287006B300BB146C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5F049B601CB42C29006F6C05 /* Project object */;
 			proxyType = 1;
@@ -199,13 +199,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		962113CB284BF6770018DBCB /* Embed Frameworks */ = {
+		969FC0E4287006B400BB146C /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				962113C8284BF6770018DBCB /* EarthoOne.framework in Embed Frameworks */,
+				969FC0E1287006B300BB146C /* EarthoOne.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,7 +333,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				962113C7284BF6770018DBCB /* EarthoOne.framework in Frameworks */,
+				969FC0E0287006B300BB146C /* EarthoOne.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,12 +702,12 @@
 				962113B5284BF60A0018DBCB /* Sources */,
 				962113B6284BF60A0018DBCB /* Frameworks */,
 				962113B7284BF60A0018DBCB /* Resources */,
-				962113CB284BF6770018DBCB /* Embed Frameworks */,
+				969FC0E4287006B400BB146C /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				962113CA284BF6770018DBCB /* PBXTargetDependency */,
+				969FC0E3287006B300BB146C /* PBXTargetDependency */,
 			);
 			name = App;
 			productName = App;
@@ -1085,10 +1085,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		962113CA284BF6770018DBCB /* PBXTargetDependency */ = {
+		969FC0E3287006B300BB146C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 5F06DD771CC448B10011842B /* EarthoOne.iOS */;
-			targetProxy = 962113C9284BF6770018DBCB /* PBXContainerItemProxy */;
+			targetProxy = 969FC0E2287006B300BB146C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

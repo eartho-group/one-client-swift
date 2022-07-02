@@ -10,23 +10,33 @@ import SwiftUI
 import EarthoOne
 
 struct ContentView: View {
-    let earthoOne = EarthoOne()
+    let earthoOne = EarthoOne(clientId: "qoWhmh4vAEZnE5Naig0b",
+                              clientSecret: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtHJ23XxMW2Yj2JaPZXRD\nxkXCS+8xuOVc9qSsROCiutpumEk/QDqxUnGubig6dYSsY0ZqAekF+hYiub7PlBVa\nuZRSydPG6jfC7fkvKtB6WccCeQqMP1YfZmsWFNbRluGoWEcHKJbYp7M+XVI8M+i0\n/7pUnPOaOHqLbpKuX3WaBNb+YdiS0cUKgUJaphM7yhQXkfme3SqUYeXrqXHkYsnf\njC93o09mfeNtY7HrU22Aq6sJto4X7E07RPyc25OyzvBADOmg7zWGna34HL8GNUqL\nc9VpGWo7uyxwomrwA84rIc979hn/TKK9AJMjhFVvU2e1mjAK+j4wB/HPrZrkG5W0\nywIDAQAB\n-----END PUBLIC KEY-----")
     
     var body: some View {
-        HStack {
+        VStack() {
+            Spacer()
+            HStack {
+                Spacer()
+                
+                Button(
+                    action: { self.login() },
+                    label: { Text("Login") }
+                )
+                Spacer()
+                Button(
+                    action: { self.login() },
+                    label: { Text("Logout") }
+                )
+                Spacer()
+            }
+            Spacer()
+            Text("Please read logs to track process")
             Spacer()
             
-            Button(
-                action: { self.login() },
-                label: { Text("Login") }
-            )
-            Spacer()
-            Button(
-                action: { self.login() },
-                label: { Text("Logout") }
-            )
-            Spacer()
-        }.onOpenURL { URL in
+            }.onOpenURL { URL in
+            
+            ///DONT FORGET TO ADD THIS IN YOUR CODE
             WebAuthentication.resume(with: URL)
         }
     }

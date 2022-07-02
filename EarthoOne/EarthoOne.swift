@@ -34,10 +34,9 @@ public class EarthoOne {
 
     private let credentialsManager : CredentialsManager
     
-    public init() {
-        let values = plistValues(bundle: Bundle.main)!
-        clientId = values.clientId
-        clientSecret = values.clientSecret
+    public init(clientId : String, clientSecret : String) {
+        self.clientId = clientId;
+        self.clientSecret = clientSecret;
         
         let auth = EarthoOneAuthentication(clientId: clientId, clientSecret: clientSecret, url: .httpsURL(from: defaultAuthDomain), session: .shared);
         self.credentialsManager = CredentialsManager(authentication: auth);
@@ -72,19 +71,4 @@ public class EarthoOne {
         return credentialsManager.user;
     }
     
-}
-
-func plistValues(bundle: Bundle) -> (clientId: String, clientSecret: String)? {
-    guard let path = bundle.path(forResource: "Info", ofType: "plist"),
-          let values = NSDictionary(contentsOfFile: path) as? [String: Any] else {
-            print("Missing EarthoOne.plist file with 'ClientId' and 'ClientSecret' entries in main bundle!")
-            return nil
-        }
-
-    guard let clientId = values["ClientId"] as? String, let clientSecret = values["ClientSecret"] as? String else {
-            print("EarthoOne.plist file at \(path) is missing 'ClientId' and/or 'ClientSecret' entries!")
-            print("File currently has the following entries: \(values)")
-            return nil
-        }
-    return (clientId: clientId, clientSecret: clientSecret)
 }
