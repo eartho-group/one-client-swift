@@ -130,52 +130,6 @@ public protocol Authentication: Trackable, Loggable {
 
 public extension Authentication {
 
-    func login(email: String, code: String, audience: String? = nil, scope: String = defaultScope) -> Request<Credentials, AuthenticationError> {
-        return self.login(email: email, code: code, audience: audience, scope: scope)
-    }
 
-    func login(phoneNumber: String, code: String, audience: String? = nil, scope: String = defaultScope) -> Request<Credentials, AuthenticationError> {
-        return self.login(phoneNumber: phoneNumber, code: code, audience: audience, scope: scope)
-    }
-
-    func login(usernameOrEmail username: String, password: String, realmOrConnection realm: String, audience: String? = nil, scope: String = defaultScope) -> Request<Credentials, AuthenticationError> {
-        return self.login(usernameOrEmail: username, password: password, realmOrConnection: realm, audience: audience, scope: scope)
-    }
-
-    func login(withOOBCode oobCode: String, mfaToken: String, bindingCode: String? = nil) -> Request<Credentials, AuthenticationError> {
-        return self.login(withOOBCode: oobCode, mfaToken: mfaToken, bindingCode: bindingCode)
-    }
-
-    func multifactorChallenge(mfaToken: String, types: [String]? = nil, authenticatorId: String? = nil) -> Request<Challenge, AuthenticationError> {
-        return self.multifactorChallenge(mfaToken: mfaToken, types: types, authenticatorId: authenticatorId)
-    }
-
-    func login(appleAuthorizationCode authorizationCode: String, fullName: PersonNameComponents? = nil, profile: [String: Any]? = nil, audience: String? = nil, scope: String = defaultScope) -> Request<Credentials, AuthenticationError> {
-        return self.login(appleAuthorizationCode: authorizationCode, fullName: fullName, profile: profile, audience: audience, scope: scope)
-    }
-
-    func login(facebookSessionAccessToken sessionAccessToken: String, profile: [String: Any], audience: String? = nil, scope: String = defaultScope) -> Request<Credentials, AuthenticationError> {
-        return self.login(facebookSessionAccessToken: sessionAccessToken, profile: profile, audience: audience, scope: scope)
-    }
-
-    func loginDefaultDirectory(withUsername username: String, password: String, audience: String? = nil, scope: String = defaultScope) -> Request<Credentials, AuthenticationError> {
-        return self.loginDefaultDirectory(withUsername: username, password: password, audience: audience, scope: scope)
-    }
-
-    func signup(email: String, username: String? = nil, password: String, connection: String, userMetadata: [String: Any]? = nil, rootAttributes: [String: Any]? = nil) -> Request<DatabaseUser, AuthenticationError> {
-        return self.signup(email: email, username: username, password: password, connection: connection, userMetadata: userMetadata, rootAttributes: rootAttributes)
-    }
-
-    func startPasswordless(email: String, type: PasswordlessType = .code, connection: String = "email") -> Request<Void, AuthenticationError> {
-        return self.startPasswordless(email: email, type: type, connection: connection)
-    }
-
-    func startPasswordless(phoneNumber: String, type: PasswordlessType = .code, connection: String = "sms") -> Request<Void, AuthenticationError> {
-        return self.startPasswordless(phoneNumber: phoneNumber, type: type, connection: connection)
-    }
-
-    func renew(withRefreshToken refreshToken: String, scope: String? = nil) -> Request<Credentials, AuthenticationError> {
-        return self.renew(withRefreshToken: refreshToken, scope: scope)
-    }
 
 }

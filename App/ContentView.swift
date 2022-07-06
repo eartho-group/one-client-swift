@@ -25,7 +25,7 @@ struct ContentView: View {
                 )
                 Spacer()
                 Button(
-                    action: { self.login() },
+                    action: { earthoOne.logout() },
                     label: { Text("Logout") }
                 )
                 Spacer()

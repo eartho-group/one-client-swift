@@ -48,10 +48,9 @@ final class EarthoOneWebAuth: WebAuth {
     lazy var redirectURL: URL? = {
         guard let bundleIdentifier = Bundle.main.bundleIdentifier else { return nil }
         var components = URLComponents(url: self.url, resolvingAgainstBaseURL: true)
-        components?.scheme = bundleIdentifier
+        components?.scheme = bundleIdentifier+".one.eartho.world"
         return components?.url?
             .appendingPathComponent(self.platform)
-            .appendingPathComponent(bundleIdentifier)
             .appendingPathComponent("callback")
     }()
 
