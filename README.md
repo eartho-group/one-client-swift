@@ -17,9 +17,9 @@ You can easily keep your backend solution - self server / firebase / amplify , o
     <br />
     <a href="https://eartho.world">Our Website</a>
     ·
-    <a href="https://github.com/eartho-group/one-client-flutter/issues">Report Bug</a>
+    <a href="https://github.com/eartho-group/one-client-swift/issues">Report Bug</a>
     ·
-    <a href="https://github.com/eartho-group/one-client-flutter/issues">Request Feature</a>
+    <a href="https://github.com/eartho-group/one-client-swift/issues">Request Feature</a>
     ·
     <a href="https://discord.gg/5QbuTNTG2q">Discord</a>
   </p>
