@@ -30,7 +30,7 @@ excluded_files = [*web_auth_files, *ios_files, *macos_files]
 
 Pod::Spec.new do |s|
   s.name             = 'EarthoOne'
-  s.version          = '1.0.5'
+  s.version          = '1.0.6'
   s.summary          = "EarthoOne SDK for Apple platforms"
   s.description      = <<-DESC
                         EarthoOne SDK for iOS, macOS, tvOS, and watchOS apps.
@@ -43,7 +43,7 @@ Pod::Spec.new do |s|
   s.source_files     = 'EarthoOne/*.swift'
   s.swift_versions   = ['5.3', '5.4', '5.5']
 
-  s.dependency 'SimpleKeychain'
+  s.dependency 'SimpleKeychain' , '~> 0.12'
   s.dependency 'JWTDecode', '~> 2.0'
 
   s.ios.deployment_target   = '12.0'
