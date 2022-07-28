@@ -8,24 +8,23 @@
   <h1 align="center">Eartho. One</h1>
 
   <p align="center">
-    One line of code to authenticate users via <b>any social network.</b><br />
-    You dont need to read the docs of all companies and you dont need to open accounts there.<br />
-    We are a third layer that abstracts the complexity for you and protects your users from being tracked.<br /><br />
-    You can easily keep your backend solution - self server / firebase / amplify , or get nocode solution from us.
-    <br /><br />
+    One line of code to authenticate users via<br /><b>Any social network, metamask and phone authentication</b><br /><br />
+You don't need to read the documents of all companies and you don't need to open accounts there.<br />
+We are a third layer that abstracts the complexity for you and protects your users from being tracked.<br /><br />
+You can easily keep your backend solution - self server / firebase / amplify , or get a nocode solution from us.<br /><br />
     <a href="https://www.eartho.world/product/learn"><strong>Quick Start »</strong></a>
     <br />
     <br />
     <a href="https://eartho.world">Our Website</a>
     ·
-    <a href="https://github.com/eartho-group/one-client-flutter/issues">Report Bug</a>
+    <a href="https://github.com/eartho-group/one-client-swift/issues">Report Bug</a>
     ·
-    <a href="https://github.com/eartho-group/one-client-flutter/issues">Request Feature</a>
+    <a href="https://github.com/eartho-group/one-client-swift/issues">Request Feature</a>
+    ·
+    <a href="https://discord.gg/5QbuTNTG2q">Discord</a>
   </p>
  <br />
-<img src="https://user-images.githubusercontent.com/99670283/173242342-a7b5b130-3769-4f28-a4d7-a957504070d0.png" height="64">
-&nbsp;&nbsp;&nbsp;&nbsp;
-<img src="https://user-images.githubusercontent.com/99670283/173238668-cc62e08a-622b-42da-b914-36f5f361942d.png">
+<img src="https://user-images.githubusercontent.com/99670283/177643618-21ef51cd-3ed1-4ed0-a75e-f5cb948a8f13.png">
 </div>
 
 
@@ -36,7 +35,7 @@
 <p align="center">
 <br />
     <img src="https://user-images.githubusercontent.com/99670283/173504901-695e423a-de2a-4f70-873b-33fce39aa49c.png" alt="Logo" height="300" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="https://user-images.githubusercontent.com/99670283/172473765-7744c0ab-e203-4294-8385-5678e4d9d757.gif" alt="Logo" height="300" />
+    <img src="https://user-images.githubusercontent.com/99670283/178576414-ac74ae1f-c072-4ea2-81e4-a0b758d5256d.gif" alt="Logo" height="300" />
 <br /><br /><br />
 Get all integrations at once. No extra steps.
 From improving customer experience through seamless sign-on to making auth as easy as a click of a button – your login box must find the right balance between user convenience, privacy and security.
@@ -44,6 +43,7 @@ From improving customer experience through seamless sign-on to making auth as ea
 
 Here's why:
 
+* Ready high converting UI/UX
 * Login from Google, Twitter, Github, Facebook, Apple, Microsoft at once with not extra steps or
   extra effort.
 * Your users will be protected under our third layer, we prevent from companies to track after your
@@ -80,6 +80,11 @@ get started.
 <a href="https://www.eartho.world/product/learn"> 
 https://www.eartho.world/product/learn
 </a></h3>
+<br /> <br />
+<h3>
+<a href="https://discord.gg/5QbuTNTG2q"> 
+Our Discord For Live Support
+</a></h3>
 </p>
 <br /> <br />
 
@@ -109,9 +114,15 @@ Distributed under the Mozilla Public License Version 2.0. See `LICENSE` for more
 
 ## Contact
 
-Eartho - [@eartho_world](https://twitter.com/eartho_world) - contact@eartho.world
+Eartho<br />
 
-Project Link: [https://github.com/eartho-group/](https://github.com/your_username/group)
+
+Discord - [Link](https://discord.gg/5QbuTNTG2q)<br />
+Twitter - [@eartho_world](https://twitter.com/eartho_world)<br />
+Email - contact@eartho.world<br />
+
+Project Link: [https://github.com/eartho-group/](https://github.com/eartho-group/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
 
