@@ -46,7 +46,7 @@ struct EarthoOneAuthentication: Authentication {
             "client_id": self.clientId
         ]
         payload["scope"] = scope
-        let oauthToken = URL(string: "access/oauth/token", relativeTo: self.url)!
+        let oauthToken = URL(string: "access/oauth/refreshtoken", relativeTo: self.url)!
         return Request(session: session,
                        url: oauthToken,
                        method: "POST",

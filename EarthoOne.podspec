@@ -30,7 +30,7 @@ excluded_files = [*web_auth_files, *ios_files, *macos_files]
 
 Pod::Spec.new do |s|
   s.name             = 'EarthoOne'
-  s.version          = '1.0.6'
+  s.version          = '1.0.7'
   s.summary          = "EarthoOne SDK for Apple platforms"
   s.description      = <<-DESC
                         EarthoOne SDK for iOS, macOS, tvOS, and watchOS apps.

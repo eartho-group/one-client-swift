@@ -96,6 +96,7 @@ public struct UserInfo: JSONObjectPayload {
     ///
     /// - Requires: The `profile` scope.
     public let updatedAt: Date?
+    public let providerSource: String?
 
     /// Any custom claims.
     public let customClaims: [String: Any]?
@@ -116,7 +117,6 @@ public extension UserInfo {
         let lastName = user["lastName"] as? String
         let middleName = user["middleName"] as? String
         let displayName = user["displayName"] as? String
-        let preferredUsername = user["preferred_username"] as? String
 
         var photo: URL?
         if let photoURL = user["photoURL"] as? String { photo = URL(string: photoURL) }
@@ -139,6 +139,7 @@ public extension UserInfo {
         let phone = user["phone"] as? String
         let phoneNumberVerified = user["phoneNumberVerified"] as? Bool
         let address = user["address"] as? [String: String]
+        let providerSource = user["providerSource"] as? String
 
         var updatedAt: Date?
         if let dateString = user["updated_at"] as? String {
@@ -165,6 +166,7 @@ public extension UserInfo {
                   phoneNumberVerified: phoneNumberVerified,
                   address: address,
                   updatedAt: updatedAt,
+                  providerSource: providerSource,
                   customClaims: customClaims)
     }
 

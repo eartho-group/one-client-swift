@@ -16,19 +16,32 @@ struct ContentView: View {
     var body: some View {
         VStack() {
             Spacer()
-            HStack {
-                Spacer()
-                
+            VStack(spacing: 32) {
+                Button(
+                    action: { earthoOne.start() },
+                    label: { Text("Init SDK") }
+                )
                 Button(
                     action: { self.login() },
-                    label: { Text("Login") }
+                    label: { Text("Log in with Eartho") }
                 )
-                Spacer()
+                Button(
+                    action: { print(earthoOne.getUser()) },
+                    label: { Text("Print logged in user") }
+                )
+                Button(
+                    action: { earthoOne.getIdToken( onSuccess: { Credentials in
+                        Credentials.idToken
+                        print(Credentials.idToken)
+              
+                    },forceRefresh:true) },
+                    label: { Text("Refresh Credentials") }
+                )
                 Button(
                     action: { earthoOne.logout() },
                     label: { Text("Logout") }
                 )
-                Spacer()
+               
             }
             Spacer()
             Text("Please read logs to track process")

@@ -14,16 +14,16 @@ import Combine
 ///
 /// - See: ``CredentialsManagerError``
 public struct CredentialsManager {
-
+    
     private let storage: CredentialsStorage
     private let storeKey: String
     private let authentication: Authentication
     private let dispatchQueue = DispatchQueue(label: "com.eartho.credentialsmanager.serial")
     private let dispatchGroup = DispatchGroup()
-    #if WEB_AUTH_PLATFORM
+#if WEB_AUTH_PLATFORM
     var bioAuth: BioAuthentication?
-    #endif
-
+#endif
+    
     /// Creates a new `CredentialsManager` instance.
     ///
     /// - Parameters:
@@ -35,7 +35,7 @@ public struct CredentialsManager {
         self.authentication = authentication
         self.storage = storage
     }
-
+    
     /// Retrieves the user information from the Keychain synchronously, without checking if the credentials are expired.
     /// The user information is read from the stored [ID token](https://eartho.com/docs/security/tokens/id-tokens).
     ///
@@ -47,11 +47,11 @@ public struct CredentialsManager {
     public var user: UserInfo? {
         guard let credentials = retrieveCredentials(),
               let jwt = try? decode(jwt: credentials.idToken) else { return nil }
-
+        
         return UserInfo(json: jwt.body)
     }
-
-    #if WEB_AUTH_PLATFORM
+    
+#if WEB_AUTH_PLATFORM
     /// Enables Biometric authentication for additional security during credentials retrieval.
     ///
     /// ```
@@ -62,7 +62,7 @@ public struct CredentialsManager {
     /// Touch ID, but also allow fallback to passcode.
     ///
     /// ```
-    /// credentialsManager.enableBiometrics(withTitle: "Touch or enter passcode to Login", 
+    /// credentialsManager.enableBiometrics(withTitle: "Touch or enter passcode to Login",
     ///                                     evaluationPolicy: .deviceOwnerAuthentication)
     /// ```
     ///
@@ -75,8 +75,8 @@ public struct CredentialsManager {
     public mutating func enableBiometrics(withTitle title: String, cancelTitle: String? = nil, fallbackTitle: String? = nil, evaluationPolicy: LAPolicy = LAPolicy.deviceOwnerAuthenticationWithBiometrics) {
         self.bioAuth = BioAuthentication(authContext: LAContext(), evaluationPolicy: evaluationPolicy, title: title, cancelTitle: cancelTitle, fallbackTitle: fallbackTitle)
     }
-    #endif
-
+#endif
+    
     /// Stores a credentials instance in the Keychain.
     ///
     /// ```
@@ -91,7 +91,7 @@ public struct CredentialsManager {
         }
         return self.storage.setEntry(data, forKey: storeKey)
     }
-
+    
     /// Clears credentials stored in the Keychain.
     ///
     /// ```
@@ -102,11 +102,11 @@ public struct CredentialsManager {
     public func clear() -> Bool {
         return self.storage.deleteEntry(forKey: storeKey)
     }
-
+    
     /// Calls the `/oauth/revoke` endpoint to revoke the refresh token and then clears the credentials if the request
     /// was successful. Otherwise, the credentials will not be cleared and the callback will be called with a failure
     /// result containing a ``CredentialsManagerError/revokeFailed`` error.
-    /// 
+    ///
     /// ```
     /// credentialsManager.revoke { result in
     ///     switch result {
@@ -136,10 +136,10 @@ public struct CredentialsManager {
         guard let data = self.storage.getEntry(forKey: self.storeKey),
               let credentials = try? NSKeyedUnarchiver.unarchivedObject(ofClass: Credentials.self, from: data),
               let refreshToken = credentials.refreshToken else {
-                  _ = self.clear()
-                  return callback(.success(()))
+            _ = self.clear()
+            return callback(.success(()))
         }
-
+        
         self.authentication
             .revoke(refreshToken: refreshToken)
             .headers(headers)
@@ -153,7 +153,7 @@ public struct CredentialsManager {
                 }
             }
     }
-
+    
     /// Checks that there are credentials stored, and that the access token has not expired and will not expire within
     /// the specified TTL.
     ///
@@ -169,11 +169,11 @@ public struct CredentialsManager {
     /// - See: ``Credentials/expiresIn``
     public func hasValid(minTTL: Int = 0) -> Bool {
         guard let data = self.storage.getEntry(forKey: self.storeKey),
-            let credentials = try? NSKeyedUnarchiver.unarchivedObject(ofClass: Credentials.self, from: data) else { return false }
+              let credentials = try? NSKeyedUnarchiver.unarchivedObject(ofClass: Credentials.self, from: data) else { return false }
         return !self.hasExpired(credentials) && !self.willExpire(credentials, within: minTTL)
     }
-
-    #if WEB_AUTH_PLATFORM
+    
+#if WEB_AUTH_PLATFORM
     /// Retrieves credentials from the Keychain and yields new credentials using the refresh token if the access token
     /// is expired. Otherwise, the retrieved credentials will be returned via the success case as they are not expired.
     /// Renewed credentials will be stored in the Keychain.
@@ -237,23 +237,23 @@ public struct CredentialsManager {
             self.retrieveCredentials(withScope: scope, minTTL: minTTL, parameters: parameters, headers: headers, callback: callback)
         }
     }
-    #else
+#else
     public func credentials(withScope scope: String? = nil, minTTL: Int = 0, parameters: [String: Any] = [:], headers: [String: String] = [:], callback: @escaping (CredentialsManagerResult<Credentials>) -> Void) {
         self.retrieveCredentials(withScope: scope, minTTL: minTTL, parameters: parameters, headers: headers, callback: callback)
     }
-    #endif
-
+#endif
+    
     func retrieveCredentials() -> Credentials? {
         guard let data = self.storage.getEntry(forKey: self.storeKey),
               let credentials = try? NSKeyedUnarchiver.unarchivedObject(ofClass: Credentials.self, from: data) else { return nil }
-
+        
         return credentials
     }
-
-    private func retrieveCredentials(withScope scope: String?, minTTL: Int, parameters: [String: Any], headers: [String: String], callback: @escaping (CredentialsManagerResult<Credentials>) -> Void) {
+    
+    private func retrieveCredentials(withScope scope: String?, minTTL: Int, parameters: [String: Any], headers: [String: String], callback: @escaping (CredentialsManagerResult<Credentials>) -> Void, forceRefresh: Bool = false) {
         self.dispatchQueue.async {
             self.dispatchGroup.enter()
-
+            
             DispatchQueue.global(qos: .userInitiated).async {
                 guard let credentials = retrieveCredentials() else {
                     self.dispatchGroup.leave()
@@ -261,10 +261,11 @@ public struct CredentialsManager {
                 }
                 guard self.hasExpired(credentials) ||
                         self.willExpire(credentials, within: minTTL) ||
-                        self.hasScopeChanged(credentials, from: scope) else {
-                            self.dispatchGroup.leave()
-                            return callback(.success(credentials))
-                        }
+                        self.hasScopeChanged(credentials, from: scope) ||
+                        forceRefresh else {
+                    self.dispatchGroup.leave()
+                    return callback(.success(credentials))
+                }
                 guard let refreshToken = credentials.refreshToken else {
                     self.dispatchGroup.leave()
                     return callback(.failure(.noRefreshToken))
@@ -282,54 +283,54 @@ public struct CredentialsManager {
                                                              refreshToken: credentials.refreshToken ?? refreshToken,
                                                              expiresIn: credentials.expiresIn,
                                                              scope: credentials.scope)
-                            if self.willExpire(newCredentials, within: minTTL) {
-                                let tokenLifetime = Int(credentials.expiresIn.timeIntervalSinceNow)
-                                let error = CredentialsManagerError(code: .largeMinTTL(minTTL: minTTL, lifetime: tokenLifetime))
-                                self.dispatchGroup.leave()
-                                callback(.failure(error))
-                            } else {
+//                            if self.willExpire(newCredentials, within: minTTL) {
+//                                let tokenLifetime = Int(credentials.expiresIn.timeIntervalSinceNow)
+//                                let error = CredentialsManagerError(code: .largeMinTTL(minTTL: minTTL, lifetime: tokenLifetime))
+//                                self.dispatchGroup.leave()
+//                                callback(.failure(error))
+//                            } else {
                                 _ = self.store(credentials: newCredentials)
                                 self.dispatchGroup.leave()
                                 callback(.success(newCredentials))
-                            }
+//                            }
                         case .failure(let error):
                             self.dispatchGroup.leave()
                             callback(.failure(CredentialsManagerError(code: .renewFailed, cause: error)))
                         }
                     }
             }
-
+            
             self.dispatchGroup.wait()
         }
     }
-
+    
     func willExpire(_ credentials: Credentials, within ttl: Int) -> Bool {
         return credentials.expiresIn < Date(timeIntervalSinceNow: TimeInterval(ttl))
     }
-
+    
     func hasExpired(_ credentials: Credentials) -> Bool {
         return credentials.expiresIn < Date()
     }
-
+    
     func hasScopeChanged(_ credentials: Credentials, from scope: String?) -> Bool {
         if let newScope = scope, let lastScope = credentials.scope {
             let newScopeList = newScope.lowercased().split(separator: " ").sorted()
             let lastScopeList = lastScope.lowercased().split(separator: " ").sorted()
-
+            
             return newScopeList != lastScopeList
         }
-
+        
         return false
     }
-
+    
 }
 
 // MARK: - Combine
 
 @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
 public extension CredentialsManager {
-
-   
+    
+    
     func revoke(headers: [String: String] = [:]) -> AnyPublisher<Void, CredentialsManagerError> {
         return Deferred {
             Future { callback in
@@ -337,8 +338,8 @@ public extension CredentialsManager {
             }
         }.eraseToAnyPublisher()
     }
-
- 
+    
+    
     func credentials(withScope scope: String? = nil, minTTL: Int = 0, parameters: [String: Any] = [:], headers: [String: String] = [:]) -> AnyPublisher<Credentials, CredentialsManagerError> {
         return Deferred {
             Future { callback in
@@ -350,14 +351,14 @@ public extension CredentialsManager {
             }
         }.eraseToAnyPublisher()
     }
-
+    
 }
 
 // MARK: - Async/Await
 
 #if compiler(>=5.5) && canImport(_Concurrency)
 public extension CredentialsManager {
-
+    
     /// Calls the `/oauth/revoke` endpoint to revoke the refresh token and then clears the credentials if the request
     /// was successful. Otherwise, the credentials are not cleared and an error is thrown.
     ///
@@ -382,22 +383,22 @@ public extension CredentialsManager {
     /// - Throws: An error of type ``CredentialsManagerError``.
     /// - See: [Refresh tokens](https://eartho.com/docs/secure/tokens/refresh-tokens)
     /// - See: [Authentication API Endpoint](https://eartho.com/docs/api/authentication#revoke-refresh-token)
-    #if compiler(>=5.5.2)
+#if compiler(>=5.5.2)
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
     func revoke(headers: [String: String] = [:]) async throws {
         return try await withCheckedThrowingContinuation { continuation in
             self.revoke(headers: headers, continuation.resume)
         }
     }
-    #else
+#else
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func revoke(headers: [String: String] = [:]) async throws {
         return try await withCheckedThrowingContinuation { continuation in
             self.revoke(headers: headers, continuation.resume)
         }
     }
-    #endif
-
+#endif
+    
     /// Retrieves credentials from the Keychain and yields new credentials using the refresh token if the access token
     /// is expired. Otherwise, return the retrieved credentials as they are not expired. Renewed credentials will be
     /// stored in the Keychain.
@@ -443,7 +444,7 @@ public extension CredentialsManager {
     /// - Note: This method is thread-safe.
     /// - See: [Refresh tokens](https://eartho.com/docs/secure/tokens/refresh-tokens)
     /// - See: [Authentication API Endpoint](https://eartho.com/docs/api/authentication#refresh-token)
-    #if compiler(>=5.5.2)
+#if compiler(>=5.5.2)
     @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.2, *)
     func credentials(withScope scope: String? = nil, minTTL: Int = 0, parameters: [String: Any] = [:], headers: [String: String] = [:]) async throws -> Credentials {
         return try await withCheckedThrowingContinuation { continuation in
@@ -454,7 +455,7 @@ public extension CredentialsManager {
                              callback: continuation.resume)
         }
     }
-    #else
+#else
     @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
     func credentials(withScope scope: String? = nil, minTTL: Int = 0, parameters: [String: Any] = [:], headers: [String: String] = [:]) async throws -> Credentials {
         return try await withCheckedThrowingContinuation { continuation in
@@ -465,7 +466,7 @@ public extension CredentialsManager {
                              callback: continuation.resume)
         }
     }
-    #endif
-
+#endif
+    
 }
 #endif
