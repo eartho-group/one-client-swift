@@ -173,7 +173,7 @@ public struct CredentialsManager {
         return !self.hasExpired(credentials) && !self.willExpire(credentials, within: minTTL)
     }
     
-#if WEB_AUTH_PLATFORM
+//#if WEB_AUTH_PLATFORM
     /// Retrieves credentials from the Keychain and yields new credentials using the refresh token if the access token
     /// is expired. Otherwise, the retrieved credentials will be returned via the success case as they are not expired.
     /// Renewed credentials will be stored in the Keychain.
@@ -220,28 +220,28 @@ public struct CredentialsManager {
     /// - Note: This method is thread-safe.
     /// - See: [Refresh tokens](https://eartho.com/docs/secure/tokens/refresh-tokens)
     /// - See: [Authentication API Endpoint](https://eartho.com/docs/api/authentication#refresh-token)
-    public func credentials(withScope scope: String? = nil, minTTL: Int = 0, parameters: [String: Any] = [:], headers: [String: String] = [:], callback: @escaping (CredentialsManagerResult<Credentials>) -> Void) {
-        if let bioAuth = self.bioAuth {
-            guard bioAuth.available else {
-                let error = CredentialsManagerError(code: .biometricsFailed,
-                                                    cause: LAError(LAError.biometryNotAvailable))
-                return callback(.failure(error))
-            }
-            bioAuth.validateBiometric {
-                guard $0 == nil else {
-                    return callback(.failure(CredentialsManagerError(code: .biometricsFailed, cause: $0!)))
-                }
-                self.retrieveCredentials(withScope: scope, minTTL: minTTL, parameters: parameters, headers: headers, callback: callback)
-            }
-        } else {
-            self.retrieveCredentials(withScope: scope, minTTL: minTTL, parameters: parameters, headers: headers, callback: callback)
-        }
-    }
-#else
+//    public func credentials(withScope scope: String? = nil, minTTL: Int = 0, parameters: [String: Any] = [:], headers: [String: String] = [:], callback: @escaping (CredentialsManagerResult<Credentials>) -> Void) {
+//        if let bioAuth = self.bioAuth {
+//            guard bioAuth.available else {
+//                let error = CredentialsManagerError(code: .biometricsFailed,
+//                                                    cause: LAError(LAError.biometryNotAvailable))
+//                return callback(.failure(error))
+//            }
+//            bioAuth.validateBiometric {
+//                guard $0 == nil else {
+//                    return callback(.failure(CredentialsManagerError(code: .biometricsFailed, cause: $0!)))
+//                }
+//                self.retrieveCredentials(withScope: scope, minTTL: minTTL, parameters: parameters, headers: headers, callback: callback)
+//            }
+//        } else {
+//            self.retrieveCredentials(withScope: scope, minTTL: minTTL, parameters: parameters, headers: headers, callback: callback)
+//        }
+//    }
+//#else
     public func credentials(withScope scope: String? = nil, minTTL: Int = 0, parameters: [String: Any] = [:], headers: [String: String] = [:], callback: @escaping (CredentialsManagerResult<Credentials>) -> Void) {
         self.retrieveCredentials(withScope: scope, minTTL: minTTL, parameters: parameters, headers: headers, callback: callback)
     }
-#endif
+//#endif
     
     func retrieveCredentials() -> Credentials? {
         guard let data = self.storage.getEntry(forKey: self.storeKey),

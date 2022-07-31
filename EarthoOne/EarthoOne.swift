@@ -32,12 +32,14 @@ public class EarthoOne {
     
     private let clientId : String
     private let clientSecret : String
+    private let enabledProviders : [String]?
     
     private let credentialsManager : CredentialsManager
     
-    public init(clientId : String, clientSecret : String) {
+    public init(clientId : String, clientSecret : String, enabledProviders: [String]? = nil) {
         self.clientId = clientId;
         self.clientSecret = clientSecret;
+        self.enabledProviders = enabledProviders;
         
         let auth = EarthoOneAuthentication(clientId: clientId, clientSecret: clientSecret, url: .httpsURL(from: defaultAuthDomain), session: .shared);
         self.credentialsManager = CredentialsManager(authentication: auth);
@@ -75,8 +77,12 @@ public class EarthoOne {
                 onSuccess?(credentials)
             }
         }
-        EarthoOneWebAuth(clientId: clientId, clientSecret: clientSecret, url: .httpsURL(from: defaultDomain), session: .shared)
-            .accessId(accessId)
+        var earthoOneWebAuth = EarthoOneWebAuth(clientId: clientId, clientSecret: clientSecret, url: .httpsURL(from: defaultDomain), session: .shared)
+            .accessId(accessId);
+        if(enabledProviders?.isEmpty == false){
+            earthoOneWebAuth = earthoOneWebAuth.parameters(["enabled_providers" : enabledProviders!.joined(separator: ", ")]);
+        }
+        earthoOneWebAuth
             .start(onAuth)
     }
     /**
